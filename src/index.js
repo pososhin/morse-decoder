@@ -35,12 +35,24 @@ const MORSE_TABLE = {
     '---..':  '8',
     '----.':  '9',
     '-----':  '0',
+    '*':  ' ',
 };
-
+const REXP000 = /^0*/;
+const REXPDOT = /10/g;
+const REXPDASH =/11/g;
+const REXPSPACE = /\*+/g;
 function decode(expr) {
-    // write your solution here
+    if (!expr || expr.length <10) return '';
+    return MORSE_TABLE[ expr.substr(0,10)
+        .replace(REXP000,'')
+        .replace(REXPDOT,'.')
+        .replace(REXPDASH,'-')
+        .replace(REXPSPACE,'*')
+    ]+decode(expr.substr(10));
 }
 
 module.exports = {
     decode
 }
+
+// console.log(decode("0011101110000000101100101110100010111010**********000000001100101010100000000010**********001011111000001111110010111010000000101000111011100000000010"));
